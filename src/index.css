@@ -1,0 +1,37 @@
+/* Import Roboto and Roboto Condensed fonts with extra light, regular, and bold weights */
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;400;700&family=Roboto+Condensed:wght@200;400;700&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Set Roboto as the default font for all elements */
+body {
+  font-family: "Roboto", sans-serif;
+}
+
+.react-datepicker__header {
+  background-color: var(--primary-color-400);
+  padding: 0;
+  border: 1px;
+}
+
+.react-datepicker__day-names {
+  background-color: var(--primary-color-400);
+}
+
+.react-datepicker__day:hover {
+  background-color: #3e495433 !important;
+}
+
+.react-datepicker__triangle {
+  display: none !important;
+}
+
+select:required:invalid {
+  color: #44444480;
+}
+
+.react-datepicker__input-container{
+  height: 100%;
+}

@@ -8,9 +8,10 @@ import DevicesSvg from "../assets/svg/Devices.jsx";
 import MainPageSvg from "../assets/svg/MainPage.jsx";
 import SettingsSvg from "../assets/svg/Settings.jsx";
 import API from "../utils/utilRequest";
+import { useColorContext } from "../ui/ColorContext.jsx";
 
 function Navbar() {
-  const { PRIMARY } = useColors();
+  const { PRIMARY } = useColorContext();
   const [userCustomer, setUserCustomer] = useState(''); // State to hold warrant value
 
 
@@ -76,7 +77,7 @@ function Navbar() {
           className={`h-full md:w-full md:h-auto p-3 rounded-2xl flex flex-col items-center justify-center gap-2 ${location.pathname === "/mainpage" ? "bg-custom-primary-700" : `hover:bg-custom-primary-700 hover:scale-105 transition-all duration-300`
             }`}
         >
-          <MainPageSvg color={PRIMARY[500]} />
+          <MainPageSvg color={PRIMARY[300]} />
           <span>Anasayfa</span>
         </button>
 
@@ -85,7 +86,7 @@ function Navbar() {
           className={`h-full md:w-full md:h-auto p-3 rounded-2xl flex flex-col items-center justify-center gap-2 hover:scale-105 transition-all duration-300 ${location.pathname === "/devices" ? "bg-custom-primary-700" : `hover:bg-custom-primary-300`
             }`}
         >
-          <DevicesSvg color={PRIMARY[500]} />
+          <DevicesSvg color={PRIMARY[300]} />
           <span>Cihazlar</span>
         </button>
       </div>
@@ -99,7 +100,7 @@ function Navbar() {
           className={`h-full md:w-full md:h-auto p-3 rounded-2xl flex flex-col items-center justify-center gap-2 hover:scale-105 transition-all duration-300 ${location.pathname === "/usersettings" ? "bg-custom-primary-700" : `hover:bg-custom-primary-700`
             }`}
         >
-          <SettingsSvg color={PRIMARY[500]} />
+          <SettingsSvg color={PRIMARY[300]} />
           <span>Ayarlar</span>
         </button>
       )}

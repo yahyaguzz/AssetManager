@@ -4,7 +4,7 @@ import ShowPasswordSvg from "../assets/svg/ShowPassword.jsx";
 import HidePasswordSvg from "../assets/svg/HidePassword.jsx";
 import API from "../utils/utilRequest.js";
 import axios from "axios";
-
+import { useColorContext } from "../ui/ColorContext.jsx";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -12,6 +12,7 @@ function Login() {
   const [rememberMe, setRememberMe] = useState(false);
   const [message, setMessage] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const { PRIMARY, setColors } = useColorContext();
 
   const navigate = useNavigate();
 
@@ -26,7 +27,6 @@ function Login() {
     }
   }, []);
 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -37,7 +37,7 @@ function Login() {
 
       if (response.data.message === "Login successful") {
         const token = response.data.token;
-
+        setColors({ PRIMARY: "#1ed6b7" });
         localStorage.setItem("token", token);
 
         // If "Remember Me" is checked, save email and password to localStorage

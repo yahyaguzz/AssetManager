@@ -6,14 +6,24 @@ const initialColors = {
 };
 
 const generateColorShades = (color) => {
+  const baseColor = tinycolor(color);
+  const hsl = baseColor.toHsl();
+
+  // Rengin ışıklık değeri
+  const lightness = hsl.l;
+
+  // Beyaz veya siyah olmaması için minimum ve maksimum limitler belirleyelim
+  const minLightness = 0.1; // %10
+  const maxLightness = 0.9; // %90
+
   const shades = {
-    300: tinycolor(color).lighten(30).toString(),
-    400: tinycolor(color).lighten(20).toString(),
-    500: tinycolor(color).lighten(10).toString(),
-    600: color,
-    700: tinycolor(color).darken(10).toString(),
-    800: tinycolor(color).darken(20).toString(),
-    900: tinycolor(color).darken(30).toString(),
+    300: tinycolor({ h: hsl.h, s: hsl.s, l: Math.min(maxLightness, lightness + 0.3) }).toHexString(), // Daha açık
+    400: tinycolor({ h: hsl.h, s: hsl.s, l: Math.min(maxLightness, lightness + 0.2) }).toHexString(), // Açık
+    500: tinycolor({ h: hsl.h, s: hsl.s, l: Math.min(maxLightness, lightness + 0.1) }).toHexString(), // Orta
+    600: baseColor.toHexString(), // Temel renk
+    700: tinycolor({ h: hsl.h, s: hsl.s, l: Math.max(minLightness, lightness - 0.1) }).toHexString(), // Koyu
+    800: tinycolor({ h: hsl.h, s: hsl.s, l: Math.max(minLightness, lightness - 0.2) }).toHexString(), // Daha koyu
+    900: tinycolor({ h: hsl.h, s: hsl.s, l: Math.max(minLightness, lightness - 0.3) }).toHexString(), // En koyu
   };
 
   return shades;

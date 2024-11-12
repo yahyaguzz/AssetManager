@@ -3,8 +3,7 @@ import axios from "axios";
 //DEĞİŞİYOR;
 
 //export const baseUrl = 'https://assetmgmt.niselektronik.com/api/';
-export const baseUrl = 'http://localhost:3000/api/';
-
+export const baseUrl = 'http://192.168.1.83:3000/api/';
 
 async function headersF() {
     const token = localStorage.getItem('token');

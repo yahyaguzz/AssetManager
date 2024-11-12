@@ -11,19 +11,26 @@ import Login from "./pages/LoginPage";
 import Settings from "./pages/SettingsPage";
 import MainPage from "./pages/MainPage";
 import DevicesPage from "./pages/DevicesPage";
-import RoomDetailPage from './pages/RoomDetailPage'; 
+import RoomDetailPage from "./pages/RoomDetailPage";
 import UserSettings from "./pages/UserSettingsPage";
 import "react-datepicker/dist/react-datepicker.css";
 import useColors from "./ui/Colors";
 import LogoutBar from "./components/LogoutBar";
 import { hexToRgbValues } from "./ui/Colors";
-import { WarrantProvider, useWarrant } from './components/WarrantContext'; // Adjust the import path
+import { WarrantProvider, useWarrant } from "./components/WarrantContext"; // Adjust the import path
+import { ColorProvider, useColorContext } from "./ui/ColorContext";
+import { useEffect } from "react";
 
 function App() {
   const location = useLocation();
-  const { PRIMARY } = useColors();
+  const { PRIMARY, setColors } = useColorContext();
+  console.log(PRIMARY)
+  // const { setColors } = useColors();
   const warrant = useWarrant(); // Get warrant value from context
-
+  useEffect(() => {
+    setColors({ PRIMARY: "#31005c" });//koyu
+    // setColors({ PRIMARY: "#c98cff" });//açık
+  }, []);
   return (
     <div
       className="flex h-screen flex-row md:flex-row"
@@ -37,16 +44,22 @@ function App() {
         "--primary-color-900": hexToRgbValues(PRIMARY[900]),
       }}
     >
-      { location.pathname !== "/login"&& <Navbar />}
+      {location.pathname !== "/login" && <Navbar />}
       <div className="flex-1 md:ml-24 mt-24 md:mt-0 p-4 overflow-y-auto transition-all duration-500">
         {location.pathname !== "/login" && <LogoutBar />}
         <Routes>
           <Route path="/" element={<MainPage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/mainpage" element={<MainPage />} />
-          <Route path="/sube/:warehouse_id/oda/:room_name" element={<RoomDetailPage />} />
+          <Route
+            path="/sube/:warehouse_id/oda/:room_name"
+            element={<RoomDetailPage />}
+          />
           {/* Restrict access to the UserSettings page based on the warrant value */}
-          <Route path="/usersettings" element={warrant === "0" ? <Navigate to="/" /> : <UserSettings />} />
+          <Route
+            path="/usersettings"
+            element={warrant === "0" ? <Navigate to="/" /> : <UserSettings />}
+          />
           <Route path="/devices" element={<DevicesPage />} />
         </Routes>
       </div>
@@ -57,11 +70,13 @@ function App() {
 // Wrap App in Router to access useLocation
 function AppWrapper() {
   return (
-    <WarrantProvider>
-      <Router>
-        <App />
-      </Router>
-    </WarrantProvider>
+    <ColorProvider>
+      <WarrantProvider>
+        <Router>
+          <App />
+        </Router>
+      </WarrantProvider>
+    </ColorProvider>
   );
 }
 
